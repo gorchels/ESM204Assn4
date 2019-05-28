@@ -1,0 +1,28 @@
+---
+title: "Technical Background"
+author: "Madeline Gorchels"
+date: "5/28/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(tidyverse)
+```
+
+
+
+```{r}
+carbon = read_csv("HW4Data.csv")
+```
+
+```{r}
+ggplot(carbon, aes(x=Abatement, y = MC_D))+
+  geom_point()
+```
+
