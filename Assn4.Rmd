@@ -90,4 +90,22 @@ D = 300
 A+B+C
 #needs to cut by 300
 ```
+3. Now focus on country X (which contains sectors A, B, and C). Assume there are no “co-benefits” from
+carbon abatement (i.e. that there are no local pollutants that are affected by carbon abatement).
+Suppose to meet the Paris Accord commitments, country X needs to cut all carbon emissions in half.
+For each of the policy options listed below, derive: (1) the total cost of meeting the target in country X,
+(2) the cost (or benefit) to each sector, and (3) the tax revenue generated.
+a. Cap on carbon. Each sector (A, B, and C) must cut its carbon emissions by 100 tons (thus
+reducing total emissions from 600 down to 300).
 
+```{r}
+
+```
+
+
+b. Tax on carbon. To emit a ton of carbon in country X, you must pay a tax of $t. You will need to
+find the tax that accomplishes the desired reduction.
+c. Cap and trade. Each sector (A, B, C) is allocated carbon permits equal to their current emissions
+minus 100 (same as in (a) above), thus achieving the total reduction of 300. Then, these three
+sectors are allowed to trade with each other. You will need to derive the outcome of that
+trading.
