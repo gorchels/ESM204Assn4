@@ -21,8 +21,41 @@ library(tidyverse)
 carbon = read_csv("HW4Data.csv")
 ```
 
+Write down a plausible functional form for the marginal cost of abatement for sector A. Use regression
+analysis to estimate the parameters of that function. Repeating this for sectors B, C, and D will give
+you a model of the marginal cost of abatement function for each sector. How well do your models fit
+the data for each sector? You may need to experiment with different functional forms. Produce a plot
+of the estimated marginal abatement cost functions in all four sectors (this plot should go in your
+memo).
+
+Just use linear because it's easier to integrate 
 ```{r}
-ggplot(carbon, aes(x=Abatement, y = MC_D))+
-  geom_point()
+ggplot(carbon, aes(x=Abatement, y = MC_A))+
+  geom_point()+
+  theme_classic()
+```
+```{r}
+sectorA = lm(data = carbon, MC_A~Abatement)
+summary(sectorA)
+
+sectorB = lm(data = carbon, MC_B~Abatement)
+summary(sectorB)
+
+sectorC = lm(data = carbon, MC_C~Abatement)
+summary(sectorC)
+
+sectorD = lm(data = carbon, MC_D~Abatement)
+summary(sectorD)
+```
+
+Part 3
+
+```{r}
+A = 180
+B = 200
+C = 220
+D = 300
+A+B+C
+#needs to cut by 300
 ```
 
