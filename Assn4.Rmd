@@ -20,7 +20,7 @@ library(tidyverse)
 ```{r}
 carbon = read_csv("HW4Data.csv")
 ```
-
+Part 1 
 Write down a plausible functional form for the marginal cost of abatement for sector A. Use regression
 analysis to estimate the parameters of that function. Repeating this for sectors B, C, and D will give
 you a model of the marginal cost of abatement function for each sector. How well do your models fit
@@ -46,6 +46,28 @@ summary(sectorC)
 
 sectorD = lm(data = carbon, MC_D~Abatement)
 summary(sectorD)
+```
+Part 2 
+
+```{r}
+#Calculating the y intercept for the demand function can be accomplished because they won't pay more than this amount
+sectorAmp = sectorA$coefficients[2]*180 + sectorA$coefficients[1]
+
+sectorBmp = sectorB$coefficients[2]*200 + sectorB$coefficients[1]
+
+sectorCmp = sectorC$coefficients[2]*220 + sectorC$coefficients[1]
+
+sectorDmp = sectorD$coefficients[2]*300 + sectorD$coefficients[1]
+
+#SectorA Demand Curve
+
+#SectorB Demand Curve
+
+#SectorC Demand Curve
+
+#SectorD Demand Curve
+
+
 ```
 
 Part 3
