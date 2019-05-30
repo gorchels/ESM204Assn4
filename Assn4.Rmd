@@ -19,15 +19,13 @@ library(RColorBrewer)
 
 
 ```{r}
-carbon = read_csv("HW4Data.csv") %>% 
-  mutate(demandA = SectorADemand(x = Abatement)) %>% 
-  mutate(demandB = SectorBDemand(x = Abatement))
+carbon = read_csv("HW4Data.csv")
 ```
 Part 1 
 Write down a plausible functional form for the marginal cost of abatement for sector A. Use regression
 analysis to estimate the parameters of that function. Repeating this for sectors B, C, and D will give
 you a model of the marginal cost of abatement function for each sector. How well do your models fit
-the data for each sector? You may need to experiment with different Abfunctional forms. Produce a plot
+the data for each sector? You may need to experiment with different functional forms. Produce a plot
 of the estimated marginal abatement cost functions in all four sectors (this plot should go in your
 memo).
 
@@ -67,14 +65,14 @@ summary(sectorD)
   #geom_point() +
   #stat_smooth(method = "lm", col = "red")
 
-mac_funs <- ggplot(carbon) + 
-  geom_smooth(aes(Abatement,MC_A, colour=MC_A), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_B,fill="green"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_C, fill="red"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_D, fill="orange"), method=lm, se=FALSE) +
+mac_funs <- ggplot(carbon) +
+  geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_D, colour="D"), method=lm, se=FALSE) +
   labs(x = "CO2 (Tons)", y = "Cost ($)") +
-  scale_color_manual(c("coral", "orchid", "pink", "black"))+
-  theme_classic()
+  theme_classic()+
+  scale_fill_discrete(name="Sector")
 
 mac_funs
 
@@ -98,20 +96,19 @@ sectorDmp = sectorD$coefficients[2]*300 + sectorD$coefficients[1]
 
 #SectorA Demand Curve
 SectorADemand = function(x) {
-  Demand = (-sectorAmp/A)*x + A
-  return(Demand)
+  Demand = (sectorAmp/A)*x + A
 }
 #SectorB Demand Curve
 SectorBDemand = function(x) {
-  Demand = (-sectorBmp/B)*x + B
+  Demand = (sectorBmp/B)*x + B
 }
 #SectorC Demand Curve
 SectorCDemand = function(x) {
-  Demand = (-sectorCmp/C)*x + C
+  Demand = (sectorCmp/C)*x + C
 }
 #SectorD Demand Curve
 SectorDDemand = function(x) {
-  Demand = (-sectorDmp/D)*x + D
+  Demand = (sectorDmp/D)*x + D
 }
 
 ```
@@ -135,18 +132,6 @@ a. Cap on carbon. Each sector (A, B, and C) must cut its carbon emissions by 100
 reducing total emissions from 600 down to 300).
 
 ```{r}
-#Sector A
-
-#Cost to each sector
-A_opt = (sectorA$coefficients[1]-A)/(-sectorA$coefficients[2] - (sectorAmp/A))
-A_price = sectorA$coefficients[2]*A_opt + sectorA$coefficients[1]
-#Total Cost of meeting the target in country X
-
-#Tax revenue generated 
-
-#Sector B
-B_opt = (sectorB$coefficients[1]-B)/(-sectorB$coefficients[2] - (sectorBmp/B))
-B_price = sectorB$coefficients[2]*B_opt + sectorB$coefficients[1]
 
 ```
 
