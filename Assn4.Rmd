@@ -19,7 +19,8 @@ library(tidyverse)
 
 ```{r}
 carbon = read_csv("HW4Data.csv") %>% 
-  mutate(demandA = SectorADemand(x = Abatement))
+  mutate(demandA = SectorADemand(x = Abatement)) %>% 
+  mutate(demandB = SectorBDemand(x = Abatement))
 ```
 Part 1 
 Write down a plausible functional form for the marginal cost of abatement for sector A. Use regression
@@ -105,10 +106,14 @@ reducing total emissions from 600 down to 300).
 
 #Cost to each sector
 A_opt = (sectorA$coefficients[1]-A)/(-sectorA$coefficients[2] - (sectorAmp/A))
+A_price = sectorA$coefficients[2]*A_opt + sectorA$coefficients[1]
 #Total Cost of meeting the target in country X
 
 #Tax revenue generated 
 
+#Sector B
+B_opt = (sectorB$coefficients[1]-B)/(-sectorB$coefficients[2] - (sectorBmp/B))
+B_price = sectorB$coefficients[2]*B_opt + sectorB$coefficients[1]
 
 ```
 
