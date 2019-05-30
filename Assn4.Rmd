@@ -55,26 +55,14 @@ summary(sectorD)
 ```{r}
 #Plotting the estimated marginal abatement cost functions in all four sectors
 
-#mac_fun <- ggplot(carbon, aes(x = "Tons of CO2", y = "Cost")) +
-       #geom_point() +
-  #stat_smooth(method = "lm", col = "red")
-  #scale_y_continuous(expand = c(0,0)) +
-  #scale_x_continuous(expand = c(0,0)) +
-  #geom_ribbon(aes(ymin = Probability - SE, ymax = Probability + SE, fill = Sex), alpha = 0.3) +
-  #theme_classic()
-
-#ggplot(iris, aes(x = Petal.Width, y = Sepal.Length)) + 
-  #geom_point() +
-  #stat_smooth(method = "lm", col = "red")
-
 mac_funs <- ggplot(carbon) +
-  geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_D, colour="D"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_A, colour="Sector A"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_B,colour="Sector B"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_C, colour="Sector C"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_D, colour="Sector D"), method=lm, se=FALSE) +
   labs(x = "CO2 (Tons)", y = "Cost ($)") +
   theme_classic()+
-  scale_fill_discrete(name="Sector")
+  theme(legend.title = element_blank())
 
 mac_funs
 
