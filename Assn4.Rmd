@@ -76,6 +76,29 @@ mac_funs
 ```
 
 
+
+
+```{r}
+mac_funs_demand <- ggplot(carbon) +
+  geom_smooth(aes(Abatement,demandA, colour="A"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,demandB,colour="B"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,demandC, colour="C"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,demandD, colour="D"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_D, colour="D"), method=lm, se=FALSE) +
+  labs(x = bquote('Tons of'~CO[2]), y = "Cost in Dollars") +
+  labs(color="Sector")+
+  theme_classic()+
+  scale_y_continuous(expand = c(0,0))+
+  scale_x_continuous(expand = c(0,0))+
+  scale_color_manual(values=c("cornflowerblue", "cyan4", "orchid4", "coral"))
+
+
+mac_funs_demand
+```
+
 Part 2 
 
 ```{r}
@@ -92,19 +115,20 @@ sectorDmp = sectorD$coefficients[2]*300 + sectorD$coefficients[1]
 
 #SectorA Demand Curve
 SectorADemand = function(x) {
-  Demand = (sectorAmp/A)*x + A
+  Demand = (-sectorAmp/A)*x + sectorAmp
 }
+
 #SectorB Demand Curve
 SectorBDemand = function(x) {
-  Demand = (sectorBmp/B)*x + B
+  Demand = (-sectorBmp/B)*x + sectorBmp
 }
 #SectorC Demand Curve
 SectorCDemand = function(x) {
-  Demand = (sectorCmp/C)*x + C
+  Demand = (-sectorCmp/C)*x + sectorCmp
 }
 #SectorD Demand Curve
 SectorDDemand = function(x) {
-  Demand = (sectorDmp/D)*x + D
+  Demand = (-sectorDmp/D)*x + sectorDmp
 }
 
 
@@ -145,6 +169,7 @@ B_price = sectorB$coefficients[2]*B_opt + sectorB$coefficients[1]
 
 b. Tax on carbon. To emit a ton of carbon in country X, you must pay a tax of $t. You will need to
 find the tax that accomplishes the desired reduction.
+
 c. Cap and trade. Each sector (A, B, C) is allocated carbon permits equal to their current emissions
 minus 100 (same as in (a) above), thus achieving the total reduction of 300. Then, these three
 sectors are allowed to trade with each other. You will need to derive the outcome of that
