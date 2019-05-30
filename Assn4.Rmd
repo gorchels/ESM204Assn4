@@ -21,7 +21,9 @@ library(RColorBrewer)
 ```{r }
 carbon = read_csv("HW4Data.csv") %>% 
   mutate(demandA = SectorADemand(x = Abatement)) %>% 
-  mutate(demandB = SectorBDemand(x = Abatement))
+  mutate(demandB = SectorBDemand(x = Abatement)) %>% 
+  mutate(demandC = SectorCDemand(x = Abatement)) %>%
+  mutate(demandD = SectorDDemand(x = Abatement)) 
 ```
 Part 1 
 Write down a plausible functional form for the marginal cost of abatement for sector A. Use regression
