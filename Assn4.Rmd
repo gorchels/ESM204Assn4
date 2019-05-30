@@ -56,15 +56,6 @@ summary(sectorD)
 #Plotting the estimated marginal abatement cost functions in all four sectors
 
 mac_funs <- ggplot(carbon) +
-<<<<<<< HEAD
-  geom_smooth(aes(Abatement,MC_A, colour="Sector A"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_B,colour="Sector B"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_C, colour="Sector C"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_D, colour="Sector D"), method=lm, se=FALSE) +
-  labs(x = "CO2 (Tons)", y = "Cost ($)") +
-  theme_classic()+
-  theme(legend.title = element_blank())
-=======
   geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
   geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
   geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
@@ -76,7 +67,6 @@ mac_funs <- ggplot(carbon) +
   scale_x_continuous(expand = c(0,0))+
   scale_color_manual(values=c("cornflowerblue", "cyan4", "orchid4", "coral"))
 
->>>>>>> dbde09bc3afceaffd92cbafba8d1b6ea3a1477f5
 
 mac_funs
 
