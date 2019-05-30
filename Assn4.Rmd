@@ -107,6 +107,7 @@ SectorDDemand = function(x) {
   Demand = (sectorDmp/D)*x + D
 }
 
+
 ```
 
 Part 3
