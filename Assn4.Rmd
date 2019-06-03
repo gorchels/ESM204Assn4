@@ -41,7 +41,7 @@ ggplot(carbon, aes(x=Abatement, y = MC_A))+
   theme_classic()
 ```
 ```{r}
-sectorA = lm(data = carbon, MC_A~Abatement)
+sectorA = lm(data = carbon, Abatement~MC_A)
 summary(sectorA)
 
 sectorB = lm(data = carbon, MC_B~Abatement)
@@ -168,6 +168,8 @@ a. Cap on carbon. Each sector (A, B, and C) must cut its carbon emissions by 100
 reducing total emissions from 600 down to 300).
 
 ```{r}
+
+lossAi = integrate(SectorADemand, 0, 100)
 lossA = sectorA$coefficients[1]*100 + (((sectorA$coefficients[2]*100)+(sectorA$coefficients[1])*(100-sectorA$coefficients[1])*0.5)) 
 
 lossB = sectorB$coefficients[1]*100 + (((sectorB$coefficients[2]*100)+(sectorB$coefficients[1])*(100-sectorB$coefficients[1])*0.5)) 
