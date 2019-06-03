@@ -150,8 +150,7 @@ carbon abatement (i.e. that there are no local pollutants that are affected by c
 Suppose to meet the Paris Accord commitments, country X needs to cut all carbon emissions in half.
 For each of the policy options listed below, derive: (1) the total cost of meeting the target in country X,
 (2) the cost (or benefit) to each sector, and (3) the tax revenue generated.
-a. Cap on carbon. Each sector (A, B, and C) must cut its carbon emissions by 100 tons (thus
-reducing total emissions from 600 down to 300).
+
 
 ```{r}
 
@@ -165,8 +164,23 @@ B_opt = (sectorB$coefficients[1]-B)/(-sectorB$coefficients[2] - (sectorBmp/B))
 B_price = sectorB$coefficients[2]*B_opt + sectorB$coefficients[1]
 ```
 
-Based off notes from 06/03
+a. Cap on carbon. Each sector (A, B, and C) must cut its carbon emissions by 100 tons (thus
+reducing total emissions from 600 down to 300).
 
+```{r}
+lossA = sectorA$coefficients[1]*100 + (((sectorA$coefficients[2]*100)+(sectorA$coefficients[1])*(100-sectorA$coefficients[1])*0.5)) 
+
+lossB = sectorB$coefficients[1]*100 + (((sectorB$coefficients[2]*100)+(sectorB$coefficients[1])*(100-sectorB$coefficients[1])*0.5)) 
+
+lossC = sectorC$coefficients[1]*100 + (((sectorC$coefficients[2]*100)+(sectorC$coefficients[1])*(100-sectorC$coefficients[1])*0.5)) 
+
+lossD = sectorD$coefficients[1]*100 + (((sectorD$coefficients[2]*100)+(sectorD$coefficients[1])*(100-sectorD$coefficients[1])*0.5)) 
+
+```
+
+
+b. Tax on carbon. To emit a ton of carbon in country X, you must pay a tax of $t. You will need to
+find the tax that accomplishes the desired reduction.
 ```{r}
 #calculating an aggregate supply curve (Sag = MagP + Bag)
 Mag =(1/sectorA$coefficients[2])+(1/sectorB$coefficients[2])+(1/sectorC$coefficients[2])
@@ -190,8 +204,7 @@ supplyag
 
 
 
-b. Tax on carbon. To emit a ton of carbon in country X, you must pay a tax of $t. You will need to
-find the tax that accomplishes the desired reduction.
+
 
 c. Cap and trade. Each sector (A, B, C) is allocated carbon permits equal to their current emissions
 minus 100 (same as in (a) above), thus achieving the total reduction of 300. Then, these three
