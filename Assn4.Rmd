@@ -205,7 +205,6 @@ supplyag
 
 
 
-
 c. Cap and trade. Each sector (A, B, C) is allocated carbon permits equal to their current emissions
 minus 100 (same as in (a) above), thus achieving the total reduction of 300. Then, these three
 sectors are allowed to trade with each other. You will need to derive the outcome of that
