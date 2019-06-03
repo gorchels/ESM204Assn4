@@ -23,7 +23,8 @@ carbon = read_csv("HW4Data.csv") %>%
   mutate(demandA = SectorADemand(x = Abatement)) %>% 
   mutate(demandB = SectorBDemand(x = Abatement)) %>% 
   mutate(demandC = SectorCDemand(x = Abatement)) %>%
-  mutate(demandD = SectorDDemand(x = Abatement)) 
+  mutate(demandD = SectorDDemand(x = Abatement)) %>% 
+  mutate(agSupplyX = ((Abatement+Bag)/Mag))
 ```
 Part 1 
 Write down a plausible functional form for the marginal cost of abatement for sector A. Use regression
@@ -164,7 +165,29 @@ B_opt = (sectorB$coefficients[1]-B)/(-sectorB$coefficients[2] - (sectorBmp/B))
 B_price = sectorB$coefficients[2]*B_opt + sectorB$coefficients[1]
 ```
 
+Based off notes from 06/03
+
+```{r}
+#calculating an aggregate supply curve (Sag = MagP + Bag)
+Mag =(1/sectorA$coefficients[2])+(1/sectorB$coefficients[2])+(1/sectorC$coefficients[2])
+Bag = (-(sectorA$coefficients[1]/sectorA$coefficients[2])-(sectorB$coefficients[1]/sectorB$coefficients[2])-(sectorC$coefficients[1]/sectorC$coefficients[2]))
+
+supplyag <- ggplot(carbon) +
+  geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,agSupplyX, colour="Ag"), method=lm, se=FALSE) +
+  labs(x = bquote('Tons of'~CO[2]), y = "Cost in Dollars") +
+  labs(color="Sector")+
+  theme_classic()+
+  scale_y_continuous(expand = c(0,0))+
+  scale_x_continuous(expand = c(0,0))+
+  scale_color_manual(values=c("cornflowerblue", "black","cyan4", "coral"))
+
+
+supplyag
 ```
+
 
 
 b. Tax on carbon. To emit a ton of carbon in country X, you must pay a tax of $t. You will need to
