@@ -240,7 +240,9 @@ supplyC = function(x){
 
   }
 
-supplyA(agsupply(300)) +supplyB(agsupply(300)) + supplyC(agsupply(300))
+supplyA(agsupply(340)) +
+supplyB(agsupply(340)) +
+supplyC(agsupply(340))
 
 ```
 
@@ -250,7 +252,7 @@ agsupply = function(x) {
   (x + Bag)/Mag
 }
 
-agsupply(300)
+agsupply(340)
 ```
 
 
