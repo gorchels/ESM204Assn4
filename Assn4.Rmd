@@ -155,13 +155,13 @@ For each of the policy options listed below, derive: (1) the total cost of meeti
 ```{r}
 
 #Cost to each sector
-A_opt = (sectorA$coefficients[1]-A)/(-sectorA$coefficients[2] - (sectorAmp/A))
-A_price = sectorA$coefficients[2]*A_opt + sectorA$coefficients[1]
+#A_opt = (sectorA$coefficients[1]-A)/(-sectorA$coefficients[2] - (sectorAmp/A))
+#A_price = sectorA$coefficients[2]*A_opt + sectorA$coefficients[1]
 #Total Cost of meeting the target in country X
 #Tax revenue generated 
 #Sector B
-B_opt = (sectorB$coefficients[1]-B)/(-sectorB$coefficients[2] - (sectorBmp/B))
-B_price = sectorB$coefficients[2]*B_opt + sectorB$coefficients[1]
+#B_opt = (sectorB$coefficients[1]-B)/(-sectorB$coefficients[2] - (sectorBmp/B))
+#B_price = sectorB$coefficients[2]*B_opt + sectorB$coefficients[1]
 ```
 
 a. Cap on carbon. Each sector (A, B, and C) must cut its carbon emissions by 100 tons (thus
