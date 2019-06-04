@@ -41,7 +41,7 @@ ggplot(carbon, aes(x=Abatement, y = MC_A))+
   theme_classic()
 ```
 ```{r}
-sectorA = lm(data = carbon, Abatement~MC_A)
+sectorA = lm(data = carbon, MC_A~Abatement)
 summary(sectorA)
 
 sectorB = lm(data = carbon, MC_B~Abatement)
@@ -178,6 +178,8 @@ lossC = sectorC$coefficients[1]*100 + (((sectorC$coefficients[2]*100)+(sectorC$c
 
 lossD = sectorD$coefficients[1]*100 + (((sectorD$coefficients[2]*100)+(sectorD$coefficients[1])*(100-sectorD$coefficients[1])*0.5)) 
 
+country_loss = lossA + lossB + lossC  
+
 ```
 
 
@@ -202,6 +204,13 @@ supplyag <- ggplot(carbon) +
 
 
 supplyag
+```
+```{r}
+agsupply = function(x) {
+  (x + Bag)/Mag
+}
+
+agsupply(300)
 ```
 
 
