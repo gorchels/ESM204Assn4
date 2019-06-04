@@ -68,8 +68,8 @@ mac_funs <- ggplot(carbon) +
   theme_classic()+
   scale_y_continuous(expand = c(0,0))+
   scale_x_continuous(expand = c(0,0))+
-  scale_color_manual(values=c("cornflowerblue", "cyan4", "orchid4", "coral"))
-
+  scale_color_manual(values=c("cornflowerblue", "cyan4", "orchid4", "coral"))+
+  geom_abline(colour = "black", intercept = 0, slope = 0)
 
 mac_funs
 
@@ -94,7 +94,9 @@ mac_funs_demand <- ggplot(carbon) +
   theme_classic()+
   scale_y_continuous(expand = c(0,0))+
   scale_x_continuous(expand = c(0,0))+
-  scale_color_manual(values=c("cornflowerblue", "cyan4", "orchid4", "coral"))
+  scale_color_manual(values=c("cornflowerblue", "cyan4", "orchid4", "coral"))+
+    geom_abline(colour = "black", intercept = 0, slope = 0)
+
 
 
 mac_funs_demand
@@ -168,17 +170,31 @@ a. Cap on carbon. Each sector (A, B, and C) must cut its carbon emissions by 100
 reducing total emissions from 600 down to 300).
 
 ```{r}
+supplyA_p = function(x){
+  (sectorA$coefficients[2]*x +sectorA$coefficients[1])
+  }
 
-lossAi = integrate(SectorADemand, 0, 100)
-lossA = sectorA$coefficients[1]*100 + (((sectorA$coefficients[2]*100)+(sectorA$coefficients[1])*(100-sectorA$coefficients[1])*0.5)) 
+supplyB_p = function(x){
+  (sectorB$coefficients[2]*x +sectorB$coefficients[1])
+}
 
-lossB = sectorB$coefficients[1]*100 + (((sectorB$coefficients[2]*100)+(sectorB$coefficients[1])*(100-sectorB$coefficients[1])*0.5)) 
 
-lossC = sectorC$coefficients[1]*100 + (((sectorC$coefficients[2]*100)+(sectorC$coefficients[1])*(100-sectorC$coefficients[1])*0.5)) 
+supplyC_p = function(x){
+  (sectorC$coefficients[2]*x +sectorC$coefficients[1])
+  }
+```
 
-lossD = sectorD$coefficients[1]*100 + (((sectorD$coefficients[2]*100)+(sectorD$coefficients[1])*(100-sectorD$coefficients[1])*0.5)) 
 
-country_loss = lossA + lossB + lossC  
+
+```{r}
+
+lossA = integrate(supplyA_p, 0, 100)
+
+lossB = integrate(supplyB_p, 0, 100)
+
+lossC = integrate(supplyC_p, 0, 100)
+
+country_loss = lossA$value + lossB$value + lossC$value  
 
 ```
 
@@ -200,11 +216,35 @@ supplyag <- ggplot(carbon) +
   theme_classic()+
   scale_y_continuous(expand = c(0,0))+
   scale_x_continuous(expand = c(0,0))+
-  scale_color_manual(values=c("cornflowerblue", "black","cyan4", "coral"))
+  scale_color_manual(values=c("cornflowerblue", "black","cyan4", "coral"))+
+    geom_abline(colour = "black", intercept = 0, slope = 0)
+
 
 
 supplyag
+
+supplyA = function(x){
+  (x - sectorA$coefficients[1])/(sectorA$coefficients[2])
+
+  }
+
+
+supplyB = function(x){
+  (x - sectorB$coefficients[1])/(sectorB$coefficients[2])
+
+}
+
+
+supplyC = function(x){
+  (x - sectorC$coefficients[1])/(sectorC$coefficients[2])
+
+  }
+
+supplyA(agsupply(300)) +supplyB(agsupply(300)) + supplyC(agsupply(300))
+
 ```
+
+
 ```{r}
 agsupply = function(x) {
   (x + Bag)/Mag
