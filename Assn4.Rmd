@@ -240,9 +240,9 @@ supplyC = function(x){
 
   }
 
-supplyA(agsupply(340)) +
-supplyB(agsupply(340)) +
-supplyC(agsupply(340))
+supplyA(taxprice) +
+supplyB(taxprice) +
+supplyC(taxprice)
 
 ```
 
@@ -252,7 +252,8 @@ agsupply = function(x) {
   (x + Bag)/Mag
 }
 
-agsupply(340)
+taxprice = agsupply(300)
+
 ```
 
 
@@ -262,3 +263,15 @@ c. Cap and trade. Each sector (A, B, C) is allocated carbon permits equal to the
 minus 100 (same as in (a) above), thus achieving the total reduction of 300. Then, these three
 sectors are allowed to trade with each other. You will need to derive the outcome of that
 trading.
+
+Starting the calculations to figure out the amount of money for sector A, B, C under cap and trade
+```{r}
+sectorAabatement = supplyA(taxprice)
+sectorBabatement = supplyB(taxprice)
+sectorCabatement = supplyC(taxprice)
+
+if (sectorAabatement > 100) {
+  
+} else
+```
+
