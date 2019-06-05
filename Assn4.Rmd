@@ -253,8 +253,8 @@ agsupply = function(x) {
   (x + Bag)/Mag
 }
 
-taxprice = agsupply(300)
-
+taxprice = agsupply(334)
+taxprice
 ```
 
 
