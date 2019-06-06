@@ -239,6 +239,11 @@ supplyB = function(x){
 supplyC = function(x){
   (x - sectorC$coefficients[1])/(sectorC$coefficients[2])
 
+}
+
+supplyD = function(x){
+  (x - sectorD$coefficients[1])/(sectorD$coefficients[2])
+
   }
 
 supplyA(taxprice) +
@@ -249,15 +254,18 @@ supplyC(taxprice)
 
 
 ```{r}
-agsupply = function(x) {
-  (x + Bag)/Mag
-}
+agsupply = function(Q) {(Q + (sectorA$coefficients[1]/sectorA$coefficients[2]) + (sectorB$coefficients[1]/sectorB$coefficients[2]) + (sectorC$coefficients[1]/sectorC$coefficients[2])) / ((1/sectorA$coefficients[2]) + (1/sectorB$coefficients[2]) + (1/sectorC$coefficients[2]))}
 
-taxprice = agsupply(334)
+
+
+taxprice = agsupply(300)
 taxprice
 ```
 
-
+#Tax Total
+```{r}
+taxprice*300
+```
 
 
 c. Cap and trade. Each sector (A, B, C) is allocated carbon permits equal to their current emissions
@@ -271,9 +279,49 @@ sectorAabatement = supplyA(taxprice)
 sectorBabatement = supplyB(taxprice)
 sectorCabatement = supplyC(taxprice)
 
-if (sectorAabatement > 100) {
-  
-} else
+##Sector A 
+
+sectorAabatement*taxprice -(100-sectorAabatement)*taxprice
+
+## Sector B
+sectorBabatement*taxprice -(100-sectorBabatement)*taxprice
+
+## Sector C
+
+sectorCabatement*taxprice -(100-sectorCabatement)*taxprice
+
+sectorAabatement*taxprice +sectorBabatement*taxprice+sectorCabatement*taxprice
+```
+###Part 4
+```{r}
+sectorDabatement = supplyD(taxprice_y)
+
+agsupply_y = function(Q) {(Q + (sectorA$coefficients[1]/sectorA$coefficients[2]) + (sectorB$coefficients[1]/sectorB$coefficients[2]) + (sectorC$coefficients[1]/sectorC$coefficients[2]) + (sectorD$coefficients[1]/sectorD$coefficients[2])) / ((1/sectorA$coefficients[2]) + (1/sectorB$coefficients[2]) + (1/sectorC$coefficients[2]) + (1/sectorD$coefficients[2]))}
+
+taxprice_y = agsupply_y(600)
+taxprice_y
+
+sectorAabatement_y = supplyA(taxprice_y)
+sectorBabatement_y = supplyB(taxprice_y)
+sectorCabatement_y = supplyC(taxprice_y)
+
+##Sector A 
+
+sectorAabatement*taxprice_y -(100-sectorAabatement)*taxprice_y
+
+## Sector B
+sectorBabatement*taxprice_y -(100-sectorBabatement)*taxprice_y
+
+## Sector C
+
+sectorCabatement*taxprice_y -(100-sectorCabatement)*taxprice_y
+
+sectorAabatement*taxprice_y +sectorBabatement*taxprice_y+sectorCabatement*taxprice_y
+
+sectorAabatement_y 
+sectorBabatement_y 
+sectorCabatement_y
+sectorDabatement
 ```
 
 
