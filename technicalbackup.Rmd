@@ -35,10 +35,14 @@ memo).
 
 Just use linear because it's easier to integrate 
 ```{r}
-ggplot(carbon, aes(x=Abatement, y = MC_A))+
+ggplot(carbon, aes(x=Abatement, y = MC_D))+
   geom_point()+
-  theme_classic()
+  theme_classic()+
+  labs(y = "Sector D Marginal Cost")
+
 ```
+
+
 ```{r}
 sectorA = lm(data = carbon, MC_A~Abatement)
 summary(sectorA)
@@ -95,6 +99,7 @@ mac_funs_demand <- ggplot(carbon) +
   scale_x_continuous(expand = c(0,0))+
   scale_color_manual(values=c("cornflowerblue", "cyan4", "orchid4", "coral"))+
     geom_abline(colour = "black", intercept = 0, slope = 0)
+
 
 
 
