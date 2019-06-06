@@ -285,7 +285,7 @@ sectorCabatement = supplyC(taxprice)
 
 ##Sector A 
 
-sectorAabatement*taxprice -(100-sectorAabatement)*taxprice
+sectorAabatement*taxprice + lossA #-(100-sectorAabatement)*taxprice
 
 ## Sector B
 sectorBabatement*taxprice -(100-sectorBabatement)*taxprice
