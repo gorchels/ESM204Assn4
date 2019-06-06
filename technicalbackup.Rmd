@@ -1,0 +1,345 @@
+---
+title: "technicalbackup"
+author: "Madeline Gorchels"
+date: "6/6/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+library(RColorBrewer)
+```
+
+
+
+```{r }
+carbon = read_csv("HW4Data.csv") %>% 
+  mutate(demandA = SectorADemand(x = Abatement)) %>% 
+  mutate(demandB = SectorBDemand(x = Abatement)) %>% 
+  mutate(demandC = SectorCDemand(x = Abatement)) %>%
+  mutate(demandD = SectorDDemand(x = Abatement)) %>% 
+  mutate(agSupplyX = ((Abatement+Bag)/Mag))
+```
+###Part 1 
+Write down a plausible functional form for the marginal cost of abatement for sector A. Use regression
+analysis to estimate the parameters of that function. Repeating this for sectors B, C, and D will give
+you a model of the marginal cost of abatement function for each sector. How well do your models fit
+the data for each sector? You may need to experiment with different functional forms. Produce a plot
+of the estimated marginal abatement cost functions in all four sectors (this plot should go in your
+memo).
+
+Just use linear because it's easier to integrate 
+```{r}
+ggplot(carbon, aes(x=Abatement, y = MC_A))+
+  geom_point()+
+  theme_classic()
+```
+```{r}
+sectorA = lm(data = carbon, MC_A~Abatement)
+summary(sectorA)
+
+sectorB = lm(data = carbon, MC_B~Abatement)
+summary(sectorB)
+
+sectorC = lm(data = carbon, MC_C~Abatement)
+summary(sectorC)
+
+sectorD = lm(data = carbon, MC_D~Abatement)
+summary(sectorD)
+```
+
+
+```{r}
+#Plotting the estimated marginal abatement cost functions in all four sectors
+
+mac_funs <- ggplot(carbon) +
+  geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_D, colour="D"), method=lm, se=FALSE) +
+  labs(x = bquote('Tons of'~CO[2]), y = "Cost in Dollars") +
+  labs(color="Sector")+
+  theme_classic()+
+  scale_y_continuous(expand = c(0,0))+
+  scale_x_continuous(expand = c(0,0))+
+  scale_color_manual(values=c("cornflowerblue", "cyan4", "orchid4", "coral"))+
+  geom_abline(colour = "black", intercept = 0, slope = 0)
+
+mac_funs
+
+
+```
+
+
+
+
+```{r}
+mac_funs_demand <- ggplot(carbon) +
+  geom_smooth(aes(Abatement,demandA, colour="A"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,demandB,colour="B"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,demandC, colour="C"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,demandD, colour="D"), method=lm, se=FALSE) +
+  #geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
+  #geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
+  #geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
+#geom_smooth(aes(Abatement,MC_D, colour="D"), method=lm, se=FALSE) +
+  labs(x = bquote('Tons of'~CO[2]), y = "Cost in Dollars") +
+  labs(color="Sector")+
+  theme_classic()+
+  scale_y_continuous(expand = c(0,0))+
+  scale_x_continuous(expand = c(0,0))+
+  scale_color_manual(values=c("cornflowerblue", "cyan4", "orchid4", "coral"))+
+    geom_abline(colour = "black", intercept = 0, slope = 0)
+
+
+
+mac_funs_demand
+```
+
+###Part 2 
+
+```{r}
+#Calculating the y intercept for the demand function can be accomplished because they won't pay more than this amount
+sectorAmp = sectorA$coefficients[2]*180 + sectorA$coefficients[1]
+
+sectorBmp = sectorB$coefficients[2]*200 + sectorB$coefficients[1]
+
+sectorCmp = sectorC$coefficients[2]*220 + sectorC$coefficients[1]
+
+sectorDmp = sectorD$coefficients[2]*300 + sectorD$coefficients[1]
+
+
+
+#SectorA Demand Curve
+SectorADemand = function(x) {
+  Demand = (-sectorAmp/A)*x + sectorAmp
+}
+
+#SectorB Demand Curve
+SectorBDemand = function(x) {
+  Demand = (-sectorBmp/B)*x + sectorBmp
+}
+#SectorC Demand Curve
+SectorCDemand = function(x) {
+  Demand = (-sectorCmp/C)*x + sectorCmp
+}
+#SectorD Demand Curve
+SectorDDemand = function(x) {
+  Demand = (-sectorDmp/D)*x + sectorDmp
+}
+
+
+```
+
+Part 3
+
+```{r}
+A = 180
+B = 200
+C = 220
+D = 300
+A+B+C
+#needs to cut by 300
+```
+###Part 3
+Now focus on country X (which contains sectors A, B, and C). Assume there are no “co-benefits” from
+carbon abatement (i.e. that there are no local pollutants that are affected by carbon abatement).
+Suppose to meet the Paris Accord commitments, country X needs to cut all carbon emissions in half.
+For each of the policy options listed below, derive: (1) the total cost of meeting the target in country X,
+(2) the cost (or benefit) to each sector, and (3) the tax revenue generated.
+
+
+```{r}
+
+#Cost to each sector
+#A_opt = (sectorA$coefficients[1]-A)/(-sectorA$coefficients[2] - (sectorAmp/A))
+#A_price = sectorA$coefficients[2]*A_opt + sectorA$coefficients[1]
+#Total Cost of meeting the target in country X
+#Tax revenue generated 
+#Sector B
+#B_opt = (sectorB$coefficients[1]-B)/(-sectorB$coefficients[2] - (sectorBmp/B))
+#B_price = sectorB$coefficients[2]*B_opt + sectorB$coefficients[1]
+```
+
+a. Cap on carbon. Each sector (A, B, and C) must cut its carbon emissions by 100 tons (thus
+reducing total emissions from 600 down to 300).
+
+```{r}
+supplyA_p = function(x){
+  (sectorA$coefficients[2]*x +sectorA$coefficients[1])
+  }
+
+supplyB_p = function(x){
+  (sectorB$coefficients[2]*x +sectorB$coefficients[1])
+}
+
+
+supplyC_p = function(x){
+  (sectorC$coefficients[2]*x +sectorC$coefficients[1])
+  }
+```
+
+
+
+```{r}
+
+lossA = integrate(supplyA_p, 0, 100)
+
+lossB = integrate(supplyB_p, 0, 100)
+
+lossC = integrate(supplyC_p, 0, 100)
+
+country_loss = lossA$value + lossB$value + lossC$value  
+
+```
+
+
+b. Tax on carbon. To emit a ton of carbon in country X, you must pay a tax of $t. You will need to
+find the tax that accomplishes the desired reduction.
+```{r}
+#calculating an aggregate supply curve (Sag = MagP + Bag)
+Mag =(1/sectorA$coefficients[2])+(1/sectorB$coefficients[2])+(1/sectorC$coefficients[2])
+Bag = (-(sectorA$coefficients[1]/sectorA$coefficients[2])-(sectorB$coefficients[1]/sectorB$coefficients[2])-(sectorC$coefficients[1]/sectorC$coefficients[2]))
+
+supplyag <- ggplot(carbon) +
+  geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
+  geom_smooth(aes(Abatement,agSupplyX, colour="Ag"), method=lm, se=FALSE) +
+  labs(x = bquote('Tons of'~CO[2]), y = "Cost in Dollars") +
+  labs(color="Sector")+
+  theme_classic()+
+  scale_y_continuous(expand = c(0,0))+
+  scale_x_continuous(expand = c(0,0))+
+  scale_color_manual(values=c("cornflowerblue", "black","cyan4", "coral"))+
+    geom_abline(colour = "black", intercept = 0, slope = 0)
+
+
+
+supplyag
+
+supplyA = function(x){
+  (x - sectorA$coefficients[1])/(sectorA$coefficients[2])
+
+  }
+
+
+supplyB = function(x){
+  (x - sectorB$coefficients[1])/(sectorB$coefficients[2])
+
+}
+
+
+supplyC = function(x){
+  (x - sectorC$coefficients[1])/(sectorC$coefficients[2])
+
+}
+
+supplyD = function(x){
+  (x - sectorD$coefficients[1])/(sectorD$coefficients[2])
+
+  }
+
+supplyA(taxprice) +
+supplyB(taxprice) +
+supplyC(taxprice)
+
+```
+
+
+```{r}
+agsupply = function(Q) {(Q + (sectorA$coefficients[1]/sectorA$coefficients[2]) + (sectorB$coefficients[1]/sectorB$coefficients[2]) + (sectorC$coefficients[1]/sectorC$coefficients[2])) / ((1/sectorA$coefficients[2]) + (1/sectorB$coefficients[2]) + (1/sectorC$coefficients[2]))}
+
+
+
+taxprice = agsupply(300)
+taxprice
+```
+
+#Tax Total
+```{r}
+taxprice*300
+```
+
+
+c. Cap and trade. Each sector (A, B, C) is allocated carbon permits equal to their current emissions
+minus 100 (same as in (a) above), thus achieving the total reduction of 300. Then, these three
+sectors are allowed to trade with each other. You will need to derive the outcome of that
+trading.
+
+Starting the calculations to figure out the amount of money for sector A, B, C under cap and trade
+```{r}
+sectorAabatement = supplyA(taxprice)
+sectorBabatement = supplyB(taxprice)
+sectorCabatement = supplyC(taxprice)
+
+##Sector A 
+
+sectorAabatement*taxprice -(100-sectorAabatement)*taxprice
+
+## Sector B
+sectorBabatement*taxprice -(100-sectorBabatement)*taxprice
+
+## Sector C
+
+sectorCabatement*taxprice -(100-sectorCabatement)*taxprice
+
+sectorAabatement*taxprice +sectorBabatement*taxprice+sectorCabatement*taxprice
+```
+###Part 4
+```{r}
+sectorDabatement = supplyD(taxprice_y)
+
+agsupply_y = function(Q) {(Q + (sectorA$coefficients[1]/sectorA$coefficients[2]) + (sectorB$coefficients[1]/sectorB$coefficients[2]) + (sectorC$coefficients[1]/sectorC$coefficients[2]) + (sectorD$coefficients[1]/sectorD$coefficients[2])) / ((1/sectorA$coefficients[2]) + (1/sectorB$coefficients[2]) + (1/sectorC$coefficients[2]) + (1/sectorD$coefficients[2]))}
+
+taxprice_y = agsupply_y(600)
+taxprice_y
+
+sectorAabatement_y = supplyA(taxprice_y)
+sectorBabatement_y = supplyB(taxprice_y)
+sectorCabatement_y = supplyC(taxprice_y)
+
+##Sector A 
+
+sectorAabatement*taxprice_y -(100-sectorAabatement)*taxprice_y
+
+## Sector B
+sectorBabatement*taxprice_y -(100-sectorBabatement)*taxprice_y
+
+## Sector C
+
+sectorCabatement*taxprice_y -(100-sectorCabatement)*taxprice_y
+
+sectorAabatement*taxprice_y +sectorBabatement*taxprice_y+sectorCabatement*taxprice_y
+
+sectorAabatement_y 
+sectorBabatement_y 
+sectorCabatement_y
+sectorDabatement
+```
+
+
+###Part 5
+Now assume that every ton of carbon emissions creates 1 ton of local air pollution. Local air pollution
+causes economic damages (health, environmental, etc.), but only in the country in which it is emitted.
+Assume there are no local air pollution regulations in either country X or country Y.
+a. In a carbon cap and trade market that only covers sectors in country X, how much local air
+pollution would you expect in country X? In country Y?
+
+#Should 300 in each. 
+
+
+b. If country Y enters the carbon market for country X (as in question 4 above), how much local
+pollution will there be in country X and country Y?
+
+#Will depend on the answer to part 4 
+
+c. What advice can you give country X and country Y about the desirability of allowing
+international trade of carbon emissions credits?
+
+#From this question it seems that country X would end up emitting lots more carbon with the cap and trade program
