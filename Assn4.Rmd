@@ -251,9 +251,11 @@ agsupply = function(x) {
 }
 
 agsupply(300)
+
+#35.19137 --> tax on carbon should be $35.19 per ton 
+
+
 ```
-
-
 
 
 c. Cap and trade. Each sector (A, B, C) is allocated carbon permits equal to their current emissions
