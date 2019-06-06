@@ -85,10 +85,10 @@ mac_funs_demand <- ggplot(carbon) +
   geom_smooth(aes(Abatement,demandB,colour="B"), method=lm, se=FALSE) +
   geom_smooth(aes(Abatement,demandC, colour="C"), method=lm, se=FALSE) +
   geom_smooth(aes(Abatement,demandD, colour="D"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
-  geom_smooth(aes(Abatement,MC_D, colour="D"), method=lm, se=FALSE) +
+  #geom_smooth(aes(Abatement,MC_A, colour="A"), method=lm, se=FALSE) +
+  #geom_smooth(aes(Abatement,MC_B,colour="B"), method=lm, se=FALSE) +
+  #geom_smooth(aes(Abatement,MC_C, colour="C"), method=lm, se=FALSE) +
+#geom_smooth(aes(Abatement,MC_D, colour="D"), method=lm, se=FALSE) +
   labs(x = bquote('Tons of'~CO[2]), y = "Cost in Dollars") +
   labs(color="Sector")+
   theme_classic()+
