@@ -282,10 +282,10 @@ Starting the calculations to figure out the amount of money for sector A, B, C u
 sectorAabatement = supplyA(taxprice)
 sectorBabatement = supplyB(taxprice)
 sectorCabatement = supplyC(taxprice)
-
+#80, 100, 120 
 ##Sector A 
 
-sectorAabatement*taxprice + lossA #-(100-sectorAabatement)*taxprice
+sectorAabatement*taxprice + lossA$value #-(100-sectorAabatement)*taxprice
 
 ## Sector B
 sectorBabatement*taxprice -(100-sectorBabatement)*taxprice
@@ -325,7 +325,8 @@ sectorAabatement*taxprice_y +sectorBabatement*taxprice_y+sectorCabatement*taxpri
 sectorAabatement_y 
 sectorBabatement_y 
 sectorCabatement_y
-sectorDabatement
+sectorDabatement 
+#
 ```
 
 
