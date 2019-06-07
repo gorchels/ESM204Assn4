@@ -388,9 +388,9 @@ pollution would you expect in country X? In country Y?
 b. If country Y enters the carbon market for country X (as in question 4 above), how much local
 pollution will there be in country X and country Y?
 
-#Will depend on the answer to part 4 
+#222.6 tons of carbon in Y, 377.3 tons of carbon in X
 
 c. What advice can you give country X and country Y about the desirability of allowing
 international trade of carbon emissions credits?
 
-#From this question it seems that country X would end up emitting lots more carbon with the cap and trade program
+#From this question it seems that country X would end up emitting lots more carbon with the cap and trade program. There are winners and losers. 
