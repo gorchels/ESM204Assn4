@@ -333,13 +333,13 @@ sectorDabatement = supplyD(taxprice_y)
 
 ##Sector A 
 
-lossA_y = integrate(supplyA_p, 0, 80)
+lossA_y = integrate(supplyA_p, 0, 66.7)
 
-lossB_y = integrate(supplyB_p, 0, 151.5)
+lossB_y = integrate(supplyB_p, 0, 103.1)
 
-lossC_y = integrate(supplyC_p, 0, 120)
+lossC_y = integrate(supplyC_p, 0, 52.9)
 
-lossD_y = integrate(supplyD_p, 0, 120)
+lossD_y = integrate(supplyD_p, 0, 77.4)
 
 
 
@@ -361,9 +361,11 @@ sectorDabatement*taxprice_y  + lossD_y$value
 
 #Cap and trade costs
 
-lossA_t$value + (96.7-80)*taxprice
-lossB_t$value - (100-48.5)*taxprice
-lossC_t$value + (154.8-120)*taxprice
+lossA_y$value + (80-66.7)*taxprice_y
+lossB_y$value - (103.1 - 100)*taxprice_y
+lossC_y$value + (120-52.9)*taxprice_y
+(-77.4)*taxprice_y
+
 
 sectorAabatement_y 
 sectorBabatement_y 
