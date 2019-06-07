@@ -343,16 +343,19 @@ lossD_y = integrate(supplyD_p, 0, 120)
 
 
 
-sectorAabatement*taxprice + lossA_t$value
+sectorAabatement*taxprice_y + lossA_y$value
 
-lossA_t$value #-(100-sectorAabatement)*taxprice
+#lossA_t$value #-(100-sectorAabatement)*taxprice
 
 ## Sector B
-sectorBabatement*taxprice  + lossB_t$value
+sectorBabatement*taxprice_y  + lossB_y$value
 
 ## Sector C
 
-sectorCabatement*taxprice  + lossC_t$value
+sectorCabatement*taxprice_y  + lossC_y$value
+## Sector D 
+
+sectorDabatement*taxprice_y  + lossD_y$value
 
 
 
