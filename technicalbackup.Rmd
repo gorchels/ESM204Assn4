@@ -186,6 +186,10 @@ supplyB_p = function(x){
 
 supplyC_p = function(x){
   (sectorC$coefficients[2]*x +sectorC$coefficients[1])
+}
+
+supplyD_p = function(x){
+  (sectorD$coefficients[2]*x +sectorD$coefficients[1])
   }
 ```
 
@@ -317,13 +321,16 @@ lossC_t$value + (154.8-120)*taxprice
 
 agsupply_y = function(Q) {(Q + (sectorA$coefficients[1]/sectorA$coefficients[2]) + (sectorB$coefficients[1]/sectorB$coefficients[2]) + (sectorC$coefficients[1]/sectorC$coefficients[2]) + (sectorD$coefficients[1]/sectorD$coefficients[2])) / ((1/sectorA$coefficients[2]) + (1/sectorB$coefficients[2]) + (1/sectorC$coefficients[2]) + (1/sectorD$coefficients[2]))}
 
+
+#80, 100, 120, 300s
 taxprice_y = agsupply_y(300)
 taxprice_y
 
 sectorAabatement_y = supplyA(taxprice_y)
 sectorBabatement_y = supplyB(taxprice_y)
 sectorCabatement_y = supplyC(taxprice_y)
-ectorDabatement = supplyD(taxprice_y)
+sectorDabatement = supplyD(taxprice_y)
+
 ##Sector A 
 
 lossA_y = integrate(supplyA_p, 0, 80)
@@ -331,6 +338,9 @@ lossA_y = integrate(supplyA_p, 0, 80)
 lossB_y = integrate(supplyB_p, 0, 151.5)
 
 lossC_y = integrate(supplyC_p, 0, 120)
+
+lossD_y = integrate(supplyD_p, 0, 120)
+
 
 
 sectorAabatement*taxprice + lossA_t$value
